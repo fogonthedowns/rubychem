@@ -1,0 +1,14 @@
+require 'rubygems'
+require 'rake'
+require 'echoe'
+
+Echoe.new('rubychem', '0.1.0') do |p|
+  p.description    = "Scripting Chemistry Intelligence."
+  p.url            = "http://github.com/fogonthedowns/rubychem"
+  p.author         = "Justin Zollars"
+  p.email          = "justinz@bgsu.edu"
+  p.ignore_pattern = ["tmp/*", "script/*"]
+  p.development_dependencies = []
+end
+
+Dir["#{File.dirname(__FILE__)}/tasks/*.rake"].sort.each { |ext| load ext }
