@@ -1,4 +1,5 @@
-class Chemical
+module RubyChem   
+ class Chemical
   
   MASSES = { :H => 1.01, :He => 4.00, :Li => 6.94, :Be => 9.01, :B => 10.81, :C => 12.01, :N => 14.01, :F => 19.00, :Ne => 20.18, :S => 32.01, :O => 15.99, 
   :Na => 22.99, :Mg => 24.31, :Al => 26.98, :Si => 28.09, :P => 30.97, :Cl => 35.45, :Ar => 39.95, :K => 39.1, :Ca => 40.08, :Sc => 44.96, :Ti => 47.88, :V => 50.94,
@@ -11,16 +12,29 @@ class Chemical
   
   attr_accessor :chem_species, :mm
    
-  def initialize(speciate)
-   x = speciate.scan(/[A-za-z]*\d+/)
-   @chem_species = x.map { |chem| chem.scan(/[A-Z][^A-Z]*/) }.flatten
+  def initialize(formula)
+     if formula.scan(/\d+$/) == []
+      y = formula.gsub(/$/, '1')
+      x = y.scan(/[A-za-z]*\d+/)
+      speciate(x) 
+     else
+      x = formula.scan(/[A-za-z]*\d+/)
+      speciate(x)
+     end
   end
   
   def fw
-     @chem_species.map! {|chem| chem.scan /[A-Z]+|\d+/i }
-	 atom_masses = @chem_species.map { |(elem, coeff)| MASSES[elem.to_sym] * (coeff || 1).to_i }
-	 x = atom_masses.map { |int| int.to_i }
+    @chem_species.map! {|chem| chem.scan /[A-Z]+|\d+/i }
+	 atom_masses = @chem_species.map { |(elem, coeff)| MASSES[elem.to_sym] * (coeff || 1).to_f }
+	 x = atom_masses.map { |int| int.to_f }
 	 @mm = x.inject(0) { |s,v| s+= v }
   end
+  
+  private
+  
+  def speciate(x)
+    @chem_species = x.map { |chem| chem.scan(/[A-Z][^A-Z]*/) }.flatten
+  end
+  
+ end
 end
-
