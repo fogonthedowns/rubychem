@@ -38,7 +38,11 @@ module RubyChem
 #  
   def fw
     @chem_species.map! {|chem| chem.scan /[A-Z]+|\d+/i }
+# .map allows iteration and conversion of elements of an array. The current array [["H", "2"], ["S"], ["O", "4"]]
+# is iterated through elem, and coeff. The element is converted to a symbol and is multiplied by the coeff floating point
+# if there is no coefficient 1 is substituted, using (coeff || 1). Result => [2.02, 32.01, 63.96] 
      atom_masses = @chem_species.map { |(elem, coeff)| MASSES[elem.to_sym] * (coeff || 1).to_f }
+# Converts all elements within the array to floating point, althought I'm not sure if this is needed.
      x = atom_masses.map { |int| int.to_f }
      @mm = x.inject(0) { |s,v| s+= v }
   end
