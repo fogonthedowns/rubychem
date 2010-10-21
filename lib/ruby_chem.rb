@@ -37,6 +37,8 @@ module RubyChem
 # Calculates the molecular mass.
 #  
   def fw
+# .map allows iteration and conversion of elements of an array. .scan will split the array elements between a letter(range A-Z) that matches, and a digit that matches
+# /i makes the whole regex case insensative. ! saves it immediately, from ["H2", "S", "O4"]  the result => [["H", "2"], ["S"], ["O", "4"]]     
     @chem_species.map! {|chem| chem.scan /[A-Z]+|\d+/i }
 # .map allows iteration and conversion of elements of an array. The current array [["H", "2"], ["S"], ["O", "4"]]
 # is iterated through elem, and coeff. The element is converted to a symbol and is multiplied by the coeff floating point
