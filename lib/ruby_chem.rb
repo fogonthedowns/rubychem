@@ -46,6 +46,7 @@ module RubyChem
      atom_masses = @chem_species.map { |(elem, coeff)| MASSES[elem.to_sym] * (coeff || 1).to_f }
 # Converts all elements within the array to floating point, althought I'm not sure if this is needed.
      x = atom_masses.map { |int| int.to_f }
+# the .inject combines the elements of enum, s = s + v     
      @mm = x.inject(0) { |s,v| s+= v }
   end
   
