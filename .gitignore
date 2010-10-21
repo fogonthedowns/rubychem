@@ -1,5 +1,6 @@
+*.log
+tmp/**/*
 pkg
 doc
 Manifest
-.DS_Store
-DS_Store
+.DS_store
