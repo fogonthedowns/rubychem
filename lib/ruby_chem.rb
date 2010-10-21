@@ -12,10 +12,8 @@ module RubyChem
   
   attr_accessor :chem_species, :mm
 
-##
-# Checks if the last element is monatomic; adds '1' if it is.
-
   def initialize(formula)
+# Checks if the last element is monatomic; adds '1' if it is.
 # This is a comparison, true or false, is there no trailing digit?
 # the scan method is used to iterate through text, scan accepts 1 argument, 
 # in this case "match any digit \d, Match one or more occurrences of the preceding character +,
