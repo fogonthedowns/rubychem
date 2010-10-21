@@ -13,11 +13,19 @@ module RubyChem
   attr_accessor :chem_species, :mm
 
 ##
-# Checks if the last element is monotomic; adds '1' if it is.
-#   
+# Checks if the last element is monatomic; adds '1' if it is.
+
   def initialize(formula)
+# This is a comparison, true or false, is there no trailing digit?
+# the scan method is used to iterate through text, scan accepts 1 argument, 
+# in this case "match any digit \d, Match one or more occurrences of the preceding character +,
+# anchor for the end of line $"
    if formula.scan(/\d+$/) == []
+# if there is no digit, .gsub adds the trailing digit, 1)     
      y = formula.gsub(/$/, '1')
+# This method scans for the range [A-za-z] and any digit \d, Matching one or more 
+# occurrences of the preceding character +
+# so H2SO4 => ["H2, "SO4""]    
      x = y.scan(/[A-za-z]*\d+/)
      speciate(x)
     else
