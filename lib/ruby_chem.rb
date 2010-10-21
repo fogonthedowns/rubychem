@@ -50,8 +50,10 @@ module RubyChem
   private
   
   def speciate(x)
-# This method breaks apart chemical compounds into species. It does so by    
-# scanning the array, for instance ["H2", "SO4"], for the range of [A-Z] and an 
+# This method breaks apart chemical compounds into species. It does so by
+# first using the .map method, which allows iteratation and conversion of elements of an array.
+# The elemeonts of the array are modified using the .scan method. Each element of the     
+# array is scanned for two consecutive letters, for instance ["H2", "SO4"] is scanned for the range of [A-Z] and an 
 # anchor at the beginning of the second character (range [A-Z]) ^. Returns => [["H2"], ["S", "O4"]] 
 # The .flatten method returns ["H2", "S", "O4"]   
    @chem_species = x.map { |chem| chem.scan(/[A-Z][^A-Z]*/) }.flatten
