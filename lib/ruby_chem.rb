@@ -10,7 +10,7 @@ module RubyChem
       :Pb => 207.2, :Bi => 209, :Po => 209, :At => 210, :Rn => 222, :Fr => 223, :Ra => 226, :Ac => 227, :Rf => 261, :Db => 262, :Sg => 263, :Bh => 264, :Hs => 265,
       :Mt => 268, :Ds => 271, :Rg => 272 }
   
-  attr_accessor :chem_species, :mm
+  attr_accessor :chem_species, :mm, :fw
 
   def initialize(formula)
 # Checks if the last element is monatomic; adds '1' if it is.
@@ -68,16 +68,31 @@ module RubyChem
 end
 
 class BalanceChem
-  attr_accessor :balanced, :formula1, :formula2
+  attr_accessor :balanced, :lefteq, :righteq, :leftfw, :rightfw, :count
   
 ##
 # Checks if two formulas are balanced.
 #  
-  def initialize(formula1, formula2)
-    @formula1 = formula1.gsub(' + ', '')
-    @formula2 = formula2.gsub(' + ', '')
-    @balanced = (RubyChem::Chemical.new(@formula1).fw - RubyChem::Chemical.new(@formula2).fw).abs < 0.00001
+  def initialize(lefteq, righteq)
+     @lefteq = lefteq
+     @righteq = righteq
+     @leftfw = RubyChem::Chemical.new(@lefteq)
+     @rightfw = RubyChem::Chemical.new(@righteq)
+     @balanced = ( RubyChem::Chemical.new(@lefteq).fw - RubyChem::Chemical.new(@righteq).fw ).abs < 0.00001
   end
+  
+  def balanceit
+         @count = 0
+         @leftfw = @leftfw.fw
+         @rightfw = @rightfw.fw
+     until @balanced == true
+         @rightfw = @rightfw * 2
+         @balanced = (@leftfw - @rightfw).abs < 0.00001
+         @count += 1
+       end 
+       puts "#{@lefteq} (#{@leftfw}) -> #{@righteq} (#{@rightfw}) is a balanced equation; #{@count} iterations"
+  end
+  
   
 end
 end
