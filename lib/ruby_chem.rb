@@ -20,11 +20,11 @@ module RubyChem
 # anchor for the end of line $"
    if formula.scan(/\d+$/) == []
 # if there is no digit, .gsub adds the trailing digit, 1)     
-     y = formula.gsub(/$/, '1')
+    
 # This method scans for the range [A-za-z] and any digit \d, Matching one or more 
 # occurrences of the preceding character +
 # so H2SO4 => ["H2, "SO4""]    
-     x = y.scan(/[A-za-z]*\d+/)
+     x = formula.gsub(/$/, '1').scan(/[A-za-z]*\d+/)
 # Calls the speciate private method, passes the variable x as the argument     
      speciate(x)
     else      
