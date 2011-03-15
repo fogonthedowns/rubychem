@@ -15,4 +15,4 @@ Example:
 * ruby script/generate scaffold chem formula:string
 * rake db:migrate
 * Add "include RubyChem" in the application_controller.rb
-* in views/chems/show.html.erb add the following code: Molecular Mass: <%= RubyChem::Chemical.new(@chem.formula.to_s).fw %>
+* in views/chems/show.html.erb add the following code: Molecular Mass: <%= Mass::Compound.new(STDOUT).fw(@chem.formula.to_s) %>
