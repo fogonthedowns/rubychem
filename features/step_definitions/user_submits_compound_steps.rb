@@ -1,6 +1,7 @@
 When /^I submit "([^"]*)"$/ do |formula|
   @chemical = Mass::Compound.new(output)
-  @chemical.start(formula)
+  @chemical.start
+  @chemical.fw(formula)
 end
 
 Then /^the molecular mass should be "([^"]*)"$/ do |mass|

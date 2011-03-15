@@ -15,3 +15,5 @@ Feature: user submits compound
       | H2O | 18.01  |
       | O | 15.99 |
       | H2SO4 | 97.99 |
+      | NaCl | 58.44 |
+      | C6H12O6 | 180.12 |

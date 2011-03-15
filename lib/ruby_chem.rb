@@ -29,7 +29,7 @@ module Mass
          x = formula.scan(/[A-za-z]*\d+/)
          speciate(x)
         end
-        @output.puts @mm.to_s
+        @output.puts @mm.round_to(4).to_s
     end
     
     private
@@ -41,5 +41,11 @@ module Mass
        x = atom_masses.map { |int| int.to_f } 
        @mm = x.inject(0) { |s,v| s+= v }
     end
+  end  
+end
+
+class Float
+  def round_to(x)
+    (self * 10**x).round.to_f / 10**x
   end
 end
