@@ -9,10 +9,4 @@ Example:
 
 # Installation
 
-* cd vendor/plugins
-* git clone
-* git://github.com/fogonthedowns/rubychem.git
-* ruby script/generate scaffold chem formula:string
-* rake db:migrate
-* Add "include RubyChem" in the application_controller.rb
-* in views/chems/show.html.erb add the following code: Molecular Mass: <%= RubyChem::Chemical.new(@chem.formula.to_s).fw %>
+* gem install rubychem
