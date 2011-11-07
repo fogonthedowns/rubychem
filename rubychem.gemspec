@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.email       = ["justin.zollars@gmail.com"]
   s.homepage    = "http://www.justinzollars.com"
   s.summary     = %q{A ruby chemistry library}
-  s.description = %q{This is an open source library of chemistry, goodies. I'm dedicating this code to my major professor Arthur Brecher and Graduate PI Dr. Rogers of Bowling Green State University'}
+  s.description = %q{This is an open source library of chemistry, goodies. I'm dedicating this code to my major professor Arthur Brecher and Graduate PI Dr. Rogers of Bowling Green State University}
 
   s.rubyforge_project = "rubychem"
 

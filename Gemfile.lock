@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rubychem (0.0.1)
+    rubychem (1.0.0)
 
 GEM
   remote: http://rubygems.org/
