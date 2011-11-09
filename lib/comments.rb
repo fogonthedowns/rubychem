@@ -1,4 +1,4 @@
-module RubyChemOld
+module RubyChem
   class Chemical
   
     MASSES = { :H => 1.01, :He => 4.00, :Li => 6.94, :Be => 9.01, :B => 10.81, :C => 12.01, :N => 14.01, :F => 19.00, :Ne => 20.18, :S => 32.01, :O => 15.99, 

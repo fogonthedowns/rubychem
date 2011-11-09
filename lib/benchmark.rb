@@ -1,8 +1,10 @@
 # The goal is for beta.rb to run faster
 
 load 'benchmark'
-load 'oldrubychem.rb'
-load 'rubychem.rb'
+
+load 'ruby_chem.rb'
+load 'comments.rb'
+
 
 iterations = 10000
 
