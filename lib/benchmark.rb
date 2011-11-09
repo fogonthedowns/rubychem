@@ -1,8 +1,9 @@
 # The goal is for beta.rb to run faster
 
-load 'benchmark'
+require 'rubygems'
+require 'benchmark'
 
-load 'ruby_chem.rb'
+load 'rubychem.rb'
 load 'comments.rb'
 
 
@@ -10,25 +11,25 @@ iterations = 10000
 
 a = Benchmark.measure do
    for i in 1..iterations do
-      RubyChem::Chemical.new("H2O").fw
+      RubyChem::Chemical.new("H2O")
    end
 end
 
 b = Benchmark.measure do
    for i in 1..iterations do
-      RubyChemBeta::Chemical.new("H2O")
+      RubyChem::Compound.new("H2O")
    end
 end
 
 c = Benchmark.measure do
    for i in 1..iterations do
-      RubyChem::Chemical.new("H2SO4").fw
+      RubyChem::Chemical.new("H2SO4")
    end
 end
 
 d = Benchmark.measure do
    for i in 1..iterations do
-      RubyChemBeta::Chemical.new("H2SO4")
+      RubyChem::Compound.new("H2SO4")
    end
 end
 
