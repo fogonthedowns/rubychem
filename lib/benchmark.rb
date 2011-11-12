@@ -17,7 +17,7 @@ end
 
 b = Benchmark.measure do
    for i in 1..iterations do
-      RubyChem::Compound.new("H2O")
+      RubyChem::Compound.new("H2O").fw
    end
 end
 
@@ -29,7 +29,7 @@ end
 
 d = Benchmark.measure do
    for i in 1..iterations do
-      RubyChem::Compound.new("H2SO4")
+      RubyChem::Compound.new("H2SO4").fw
    end
 end
 
