@@ -3,8 +3,8 @@
 require 'rubygems'
 require 'benchmark'
 
-load 'rubychem.rb'
-load 'comments.rb'
+load 'rubychem/molecule.rb'
+load 'rubychem/comments.rb'
 
 
 iterations = 10000
