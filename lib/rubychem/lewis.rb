@@ -6,14 +6,16 @@ class Lewis
   
 	def initialize
 		@species = Species
-		@valence_electrons_available = determine_configuration
+		 determine_configuration
 	end
 
 
 	private 
 
 	def determine_configuration
-		valence_electrons_available(@species)
+		@valence_electrons_available = valence_electrons_available(@species)
+		@valence_electrons_needed = valence_electrons_needed_to_complete_shell(@species) * 8
+		@shared_electrons = @valence_electrons_needed - @valence_electrons_available 
 	end
 	
 	def valence_electrons_available(species)
@@ -29,8 +31,13 @@ class Lewis
     end
     electrons.inject{|sum,x| sum + x }
   end
-
-
+  
+  def valence_electrons_needed_to_complete_shell(species)
+    array = []
+    species.each{|x|array << x.count}
+    array.inject{|sum,x| sum + x}
+  end
+  
 
 end
 end
