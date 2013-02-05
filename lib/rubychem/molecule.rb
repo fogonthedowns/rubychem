@@ -10,26 +10,27 @@ module RubyChem
       Pb: 207.2, Bi: 209, Po: 209, At: 210, Rn: 222, Fr: 223, Ra: 226, Ac: 227, Rf: 261, Db: 262, Sg: 263, Bh: 264, Hs: 265,
       Mt: 268, Ds: 271, Rg: 272 }
   
-  attr_accessor :chem_species, :mm
+  attr_accessor :chem_species, :mm, :moles
 
-  def initialize(formula)
+  def initialize(formula,grams=1)
    if formula.scan(/\d+$/) == [] 
      x = formula.gsub(/$/, '1').scan(/[A-za-z]*\d+/)  
-     speciate(x)
+     speciate(x,grams)
     else      
      x = formula.scan(/[A-za-z]*\d+/)
-     speciate(x)
+     speciate(x,grams)
     end
   end
   
   private
   
-  def speciate(x)
+  def speciate(x,grams=1)
      @chem_species = x.map { |chem| chem.scan(/[A-Z][^A-Z]*/) }.flatten
      @chem_species.map! {|chem| chem.scan /[A-Z]+|\d+/i }
      atom_masses = @chem_species.map { |(elem, coeff)| MASSES[elem.to_sym] * (coeff || 1).to_f }
      x = atom_masses.map { |int| int.to_f } 
      @mm = x.inject(0) { |s,v| s+= v }
+     @moles = grams/@mm
   end
 end
 
