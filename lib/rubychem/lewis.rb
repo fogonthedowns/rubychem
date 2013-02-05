@@ -1,5 +1,5 @@
 module RubyChem
-class Lewis
+ class Lewis
 	attr_accessor :structure
   Valence = {"O" => 6, "C" => 4}
   Species = [["C"], ["O", "2"]]
@@ -8,8 +8,7 @@ class Lewis
 		@species = Species
 		 determine_configuration
 	end
-
-
+	
 	private 
 
 	def determine_configuration
@@ -37,7 +36,7 @@ class Lewis
     species.each{|x|array << x.count}
     array.inject{|sum,x| sum + x}
   end
-  
-
-end
+   
+ 
+ end
 end
