@@ -1,4 +1,4 @@
-# RubyChem is a Rails gem that allows you to calculate molecular mass from the chemical formula. The script iterates through the chemical formula and breaks the formula down into species. Then calculates molar mass.
+# RubyChem - scripting chemistry intelligence
 
 Example:
 
