@@ -2,7 +2,7 @@ Given /^I am not yet using the program$/ do
 end
 
 When /^I start the program$/ do
-  chemical = Mass::Compound.new(output)
+  chemical = RubyChem::Chemical.new(output)
   chemical.start('H2O')
 end
 
