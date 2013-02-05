@@ -1,15 +1,10 @@
 # RubyChem - scripting chemistry intelligence
 
-Example:
-
-* H2SO4 -> ["H2", "S", "O4"]
-* -> 97.99
-
 ************************************************************************
 
 # Installation
 
-* gem install rubychem
+    gem install rubychem
 
 
 # Use
