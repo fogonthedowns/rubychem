@@ -1,6 +1,6 @@
 Rubychem
 ===
-Rubychem (<a href="http://github.com/fogonthedowns/rubychem" target="_blank">http://github.com/fogonthedowns/rubychem</a>) is a new Chemistry library for Ruby, supporting the calculation of moles, balancing a chemical equation and valence orbital calculations. We wrote Rubychem with three goals:
+Rubychem (<a href="http://github.com/fogonthedowns/rubychem" target="_blank">http://github.com/fogonthedowns/rubychem</a>) is a new Chemistry library for Ruby, supporting the calculation of moles, balancing chemical equations and valence orbital calculations. We wrote Rubychem with three goals:
 
 * Lightweight: Rubychem should be a light simple library, providing a chemistry API and returning simple Ruby.
 * Fast: Rubychem should, out of the box, be quick. 
@@ -16,14 +16,15 @@ Version 1.0.4 is currently in beta, filled with features you'll love.  To downlo
 
 Chemistry Calculations
 ---
-Using Rubychem is quite straightforward:
+Using rubychem is quite straightforward:
 
-    valence = RubyChem::Valence.new(1).calc_valence
+    valence = RubyChem::Valence.new(10).calc_valence
+    {"1s"=>2, "2s"=>2, "2p"=>6}
     chemical_species = RubyChem::Chemical.new("H2O").chem_species
     moles = RubyChem::Chemical.new("H2O",1).moles
 
     
-You can use Rubychem to parse chemical equations
+You can use rubychem to parse chemical equations
 
     equation = RubyChem::Equation.new("NaCl = Na + Cl")
     equation.left 
