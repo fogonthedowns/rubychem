@@ -27,6 +27,7 @@ module RubyChem
     def speciate(x,grams=1)
       @chem_species = x.map { |chem| chem.scan(/[A-Z][^A-Z]*/) }.flatten
       @chem_species.map! {|chem| chem.scan /[A-Z]+|\d+/i }
+      @chem_species.map!{|s1, s2| [s1, *(s2.to_i if s2), *(1 if s2.nil?),]}
       atom_masses = @chem_species.map { |(elem, coeff)| MASSES[elem.to_sym] * (coeff || 1).to_f }
       x = atom_masses.map { |int| int.to_f } 
       @mm = x.inject(0) { |s,v| s+= v }
