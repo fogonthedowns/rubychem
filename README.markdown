@@ -16,3 +16,8 @@
     => [["H", "2"], ["O", "1"]]
     x = RubyChem::Chemical.new("H2O",1).moles
     => 0.010205122971731808`
+    
+# We now support parsing a Chemical Equation
+
+    chem = RubyChem::Equation.new("NaCl = Na + Cl")
+    chem.left => [#<RubyChem::Chemical:0x007f842313dae0 @chem_species=[["Na", "1"]], @mm=22.99, @moles=0.04349717268377556>, #<RubyChem::Chemical:0x007f842313d2e8 @chem_species=[["Cl", "1"]], @mm=35.45, @moles=0.028208744710860365>] 
