@@ -24,39 +24,13 @@ module RubyChem
   
   private
   
-  def speciate(x,grams=1)
-     @chem_species = x.map { |chem| chem.scan(/[A-Z][^A-Z]*/) }.flatten
-     @chem_species.map! {|chem| chem.scan /[A-Z]+|\d+/i }
-     atom_masses = @chem_species.map { |(elem, coeff)| MASSES[elem.to_sym] * (coeff || 1).to_f }
-     x = atom_masses.map { |int| int.to_f } 
-     @mm = x.inject(0) { |s,v| s+= v }
-     @moles = grams/@mm
+    def speciate(x,grams=1)
+      @chem_species = x.map { |chem| chem.scan(/[A-Z][^A-Z]*/) }.flatten
+      @chem_species.map! {|chem| chem.scan /[A-Z]+|\d+/i }
+      atom_masses = @chem_species.map { |(elem, coeff)| MASSES[elem.to_sym] * (coeff || 1).to_f }
+      x = atom_masses.map { |int| int.to_f } 
+      @mm = x.inject(0) { |s,v| s+= v }
+      @moles = grams/@mm
+    end
   end
-end
-
-class BalanceChem
-  attr_accessor :balanced, :lefteq, :righteq, :leftfw, :rightfw, :count
-  
-  # Checks if two formulas are balanced.
-  #  
-  def initialize(lefteq, righteq)
-     @lefteq = lefteq
-     @righteq = righteq
-     @balanced = ( RubyChem::Chemical.new(@lefteq).mm - RubyChem::Chemical.new(@righteq).mm ).abs < 0.00001
-  end
-  
-  def balanceit
-         @count = 0
-         @leftfw = @leftfw.fw
-         @rightfw = @rightfw.fw
-     until @balanced == true
-         @rightfw = @rightfw * 2
-         @balanced = (@leftfw - @rightfw).abs < 0.00001
-         @count += 1
-       end 
-       puts "#{@lefteq} (#{@leftfw}) -> #{@righteq} (#{@rightfw}) is a balanced equation; #{@count} iterations"
-  end
-  
-  
-end
 end
