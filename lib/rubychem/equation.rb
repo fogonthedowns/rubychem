@@ -9,6 +9,7 @@ module RubyChem
     def initialize(equation)
     	@left = Array.new
     	@right = Array.new
+      
       left_and_right = equation.split(/\=/)
       process_sides(left_and_right)
     end
@@ -29,7 +30,45 @@ module RubyChem
         end
       end  
     end
-  
+
+
+    # add up all atoms, on each side
+    # left = {Na:1,Cl:2}
+    # right = {Na:2,Cl:4} 
+    def combine_atoms
+      @left_total = Hash.new
+      @right_total = Hash.new
+      combine_part(@left, @left_total)
+      combine_part(@right, @right_total)
+    end
+
+    def combine_part(part, total)
+      part.each do |chemical|
+        chemical.chem_species.each do |atom|
+          if total[atom[0]].nil?
+            total[atom[0]] = atom[1]
+          else
+            total[atom[0]] += atom[1]
+          end
+        end
+      end
+    end
+
+    def balance
+    end
+
+    def compare_values
+       @right_total.each_key do |key|
+        @balanced = @right_total[key] == @left_total[key]
+       end
+       @balanced
+    end
+    # get left.each_key {|key| compare_method(key)}
+    
+    # compare_method
+    # unless left[key] == right[key]
+    #   balanced = false
+    #   break from loop to balance
 
   end
 end
