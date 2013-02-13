@@ -54,6 +54,7 @@ module RubyChem
       end
     end
 
+    # http://www.shodor.org/unchem/math/matrix/index.html
     def balance
     end
 
