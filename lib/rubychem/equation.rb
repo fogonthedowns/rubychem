@@ -3,7 +3,7 @@ module RubyChem
     attr_accessor :left, :right
 
     # Checks if two formulas are balanced.
-    # Parse string... so that x + y + z = a + b
+    # Takes user input.. such as x + y + z = a + b
     # yields @left[Chemical1, Chemical2, Chemical3], @right[Chemical1,Chemical2]
 
     def initialize(equation)
@@ -11,15 +11,15 @@ module RubyChem
     	@right = Array.new
       
       left_and_right = equation.split(/\=/)
-      process_sides(left_and_right)
+      process_equation_string(left_and_right)
     end
 
-    def process_sides(left_and_right)
-      process(left_and_right[0], "left")
-      process(left_and_right[1], "right")
+    def process_equation_string(left_and_right)
+      instantiate_chemical_object_from_string(left_and_right[0], "left")
+      instantiate_chemical_object_from_string(left_and_right[1], "right")
     end
 
-    def process(equation, side)	
+    def instantiate_chemical_object_from_string(equation, side)	
      if side == "left"
        equation.split(/\+/).each do |chemical|
          @left << RubyChem::Chemical.new(chemical.strip)     
@@ -53,12 +53,17 @@ module RubyChem
         end
       end
     end
+    
+    # linear algebra
+    # http://www.saintjoe.edu/~karend/m244/ChemicalEquations.pdf
+    # Set up a system of equations from unbalanced chemical
+    # rearrange the system of equations to form an augmented matrix
+    # solve the augmented matrix
 
-    # http://www.shodor.org/unchem/math/matrix/index.html
     def balance
     end
 
-    def compare_values
+    def is_balanced?
        @right_total.each_key do |key|
         @balanced = @right_total[key] == @left_total[key]
        end
