@@ -1,5 +1,6 @@
 module RubyChem
   class Equation
+    require 'rational'
     attr_accessor :left, :right
 
     # Checks if two formulas are balanced.
@@ -53,15 +54,6 @@ module RubyChem
         end
       end
     end
-    
-    # linear algebra
-    # http://www.saintjoe.edu/~karend/m244/ChemicalEquations.pdf
-    # Set up a system of equations from unbalanced chemical
-    # rearrange the system of equations to form an augmented matrix
-    # solve the augmented matrix
-
-    def balance
-    end
 
     def is_balanced?
        @right_total.each_key do |key|
@@ -69,12 +61,100 @@ module RubyChem
        end
        @balanced
     end
+
+    # linear algebra
+    # http://www.saintjoe.edu/~karend/m244/ChemicalEquations.pdf
+    # Set up a system of equations from unbalanced chemical
+    # rearrange the system of equations to form an augmented matrix
+    # transform a matrix to the reduced row echelon form
+    
+    # System of Equations setup
+    # 1. Assign unknown coeficients 
+    # C12H26 + O2 = CO2 + H2O
+    # aC12H26 + bO2 = cCO2 + dH2O
+    # coeficients = [a,b,c,d]
+
+
+    # 2. determnie instances on left and right of each atom, and assign those to coeficients
+    # C12H26 + O2 = CO2 + H2O
+    # O = {left:"2b",right:"2c + 1d"}
+    # O = "2b=2c+1d"
+
+    # 3. Rearrange the system of equations and write it in a matrix
+    #   a   b   c  d
+    #O  0   2  -2  -1
+    # [[0,2,-2,-1]]
+
+    def balance
+    end
+
     # get left.each_key {|key| compare_method(key)}
     
     # compare_method
     # unless left[key] == right[key]
     #   balanced = false
     #   break from loop to balance
+    
+
+    private
+ 
+    # returns an 2-D array where each element is a Rational
+    def reduced_row_echelon_form(ary)
+      lead = 0
+      rows = ary.size
+      cols = ary[0].size
+      rary = convert_to_rational(ary)  # use rational arithmetic
+      catch :done  do
+        rows.times do |r|
+        throw :done  if cols <= lead
+          i = r
+          while rary[i][lead] == 0
+            i += 1
+            if rows == i
+              i = r
+              lead += 1
+              throw :done  if cols == lead
+            end
+          end
+          # swap rows i and r 
+          rary[i], rary[r] = rary[r], rary[i]
+          # normalize row r
+          v = rary[r][lead]
+          rary[r].collect! {|x| x /= v}
+          # reduce other rows
+          rows.times do |i|
+            next if i == r
+            v = rary[i][lead]
+            rary[i].each_index {|j| rary[i][j] -= v * rary[r][j]}
+          end
+          lead += 1
+        end
+      end
+      rary
+    end
+   
+    def convert_to_rational(ary)
+      new = []
+      ary.each_index do |row|
+        new << ary[row].collect {|elem| Rational(elem)}
+      end
+      new
+    end  
+ 
+    # type should be one of :to_s, :to_i, :to_f, :to_r
+    def convert_to(ary, type)
+      new = []
+      ary.each_index do |row|
+        new << ary[row].collect {|elem| elem.send(type)}
+      end
+      new
+    end
+   
+    def print_matrix(m)
+      max = m[0].collect {-1}
+      m.each {|row| row.each_index {|i| max[i] = [max[i], row[i].to_s.length].max}}
+      m.each {|row| row.each_index {|i| print "%#{max[i]}s " % row[i].to_s}; puts ""}
+    end
 
   end
 end
