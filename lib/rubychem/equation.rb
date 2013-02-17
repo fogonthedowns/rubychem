@@ -75,10 +75,10 @@ module RubyChem
     # coeficients = [a,b,c,d]
 
     def set_up_system_of_equations
-      list_of_possible_variables = []
+      @list_of_possible_variables = []
       chemicals = @right.size + @left.size
       (0..chemicals).each do |key|
-        list_of_possible_variables >> Object
+        @list_of_possible_variables << Object
       end
     end
 
