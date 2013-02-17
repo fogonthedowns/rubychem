@@ -74,6 +74,14 @@ module RubyChem
     # aC12H26 + bO2 = cCO2 + dH2O
     # coeficients = [a,b,c,d]
 
+    def set_up_system_of_equations
+      list_of_possible_variables = []
+      chemicals = @right.size + @left.size
+      (0..chemicals).each do |key|
+        list_of_possible_variables >> Object
+      end
+    end
+
 
     # 2. determnie instances on left and right of each atom, and assign those to coeficients
     # C12H26 + O2 = CO2 + H2O
