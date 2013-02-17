@@ -1,7 +1,7 @@
 module RubyChem
   class Equation
     require 'rational'
-    attr_accessor :left, :right, :right_system_of_equations, :left_system_of_equations, :left_total, :right_total, :array, :search_order
+    attr_accessor :left, :right, :right_system_of_equations, :left_system_of_equations, :left_total, :right_total, :array, :search_order, :balanced
 
     # Checks if two formulas are balanced.
     # Takes user input.. such as x + y + z = a + b
@@ -177,6 +177,7 @@ module RubyChem
       end
       answer << int
       count = 0
+      @balanced = Hash.new
       @left_system_of_equations.each do |x,v|
         answer[count]
         @left_system_of_equations[x] = answer[count].to_i.abs unless answer[count].nil?
@@ -188,6 +189,7 @@ module RubyChem
         count += 1
       end
       answer
+      @balanced = {left:@left_system_of_equations,right:@right_system_of_equations}
     end
  
     # returns an 2-D array where each element is a Rational
