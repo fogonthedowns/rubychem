@@ -1,7 +1,7 @@
 module RubyChem
   class Equation
     require 'rational'
-    attr_accessor :left, :right, :right_system_of_equations, :left_system_of_equations
+    attr_accessor :left, :right, :right_system_of_equations, :left_system_of_equations, :left_total, :right_total
 
     # Checks if two formulas are balanced.
     # Takes user input.. such as x + y + z = a + b
@@ -72,7 +72,6 @@ module RubyChem
     # 1. Assign unknown coeficients 
     # C12H26 + O2 = CO2 + H2O
     # aC12H26 + bO2 = cCO2 + dH2O
-    # coeficients = [a,b,c,d]
 
     def set_up_system_of_equations
       @right_system_of_equations = Hash.new
@@ -87,11 +86,33 @@ module RubyChem
       end
     end
 
-
     # 2. determnie instances on left and right of each atom, and assign those to coeficients
     # C12H26 + O2 = CO2 + H2O
     # O = {left:"2b",right:"2c + 1d"}
     # O = "2b=2c+1d"
+
+    def assign_coeficients_to_system_of_equations
+      self.combine_atoms
+      self.set_up_system_of_equations
+      atom_list = self.left_total.merge(self.right_total)
+      # Get the Chemical list
+      assign_coeficients_to_part_system_of_equations(@right_system_of_equations)
+      assign_coeficients_to_part_system_of_equations(@left_system_of_equations)
+    end 
+    
+    def assign_coeficients_to_part_system_of_equations(part)
+        chemicals =  part.keys
+        chemicals.each do |chemical|
+          # look at the Chemical
+          chemical.chem_species.each do |atom|
+          # Does the chemical have the atom we are looking for?
+          if "O" == atom[0] 
+            part[chemical] = atom[1]
+          end
+        end
+      end
+    end
+
 
     # 3. Rearrange the system of equations and write it in a matrix
     #   a   b   c  d
