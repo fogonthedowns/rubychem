@@ -1,7 +1,7 @@
 module RubyChem
   class Equation
     require 'rational'
-    attr_accessor :left, :right
+    attr_accessor :left, :right, :right_system_of_equations, :left_system_of_equations
 
     # Checks if two formulas are balanced.
     # Takes user input.. such as x + y + z = a + b
@@ -75,10 +75,15 @@ module RubyChem
     # coeficients = [a,b,c,d]
 
     def set_up_system_of_equations
-      @list_of_possible_variables = []
-      chemicals = @right.size + @left.size
-      (0..chemicals).each do |key|
-        @list_of_possible_variables << Object
+      @right_system_of_equations = Hash.new
+      @left_system_of_equations = Hash.new
+      part_set_up_system_of_equations(@right,@right_system_of_equations)
+      part_set_up_system_of_equations(@left,@left_system_of_equations)
+    end
+
+    def part_set_up_system_of_equations(part,total)
+      part.each do |key|
+        total[key] = 0
       end
     end
 
