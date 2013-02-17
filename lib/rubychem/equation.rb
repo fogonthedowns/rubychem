@@ -1,7 +1,7 @@
 module RubyChem
   class Equation
     require 'rational'
-    attr_accessor :left, :right, :right_system_of_equations, :left_system_of_equations, :left_total, :right_total, :array
+    attr_accessor :left, :right, :right_system_of_equations, :left_system_of_equations, :left_total, :right_total, :array, :search_order
 
     # Checks if two formulas are balanced.
     # Takes user input.. such as x + y + z = a + b
@@ -36,14 +36,14 @@ module RubyChem
     # add up all atoms, on each side
     # left = {Na:1,Cl:2}
     # right = {Na:2,Cl:4} 
-    def combine_atoms
+    def list_atoms
       @left_total = Hash.new
       @right_total = Hash.new
-      combine_part(@left, @left_total)
-      combine_part(@right, @right_total)
+      list_part(@left, @left_total)
+      list_part(@right, @right_total)
     end
 
-    def combine_part(part, total)
+    def list_part(part, total)
       part.each do |chemical|
         chemical.chem_species.each do |atom|
           if total[atom[0]].nil?
@@ -92,10 +92,11 @@ module RubyChem
     # O = "2b=2c+1d"
 
     def assign_coeficients_to_system_of_equations
-      self.combine_atoms
+      self.list_atoms
       atom_list = self.left_total.merge(self.right_total)
       # Get the Chemical list
       atom_list.keys.each do |atom|
+
         self.set_up_system_of_equations
         assign_coeficients_to_part_system_of_equations(@right_system_of_equations,atom)
         assign_coeficients_to_part_system_of_equations(@left_system_of_equations,atom)
@@ -107,6 +108,7 @@ module RubyChem
     def assign_coeficients_to_part_system_of_equations(part,atom_to_search)
         chemicals =  part.keys
         chemicals.each do |chemical|
+          @search_order << chemical
           # look at the Chemical
           chemical.chem_species.each do |atom|
           # Does the chemical have the atom we are looking for?
@@ -137,22 +139,15 @@ module RubyChem
         array  <<  @right_system_of_equations[key]
       end
        @array << array
-       puts @array
     end
 
 
     def balance
+      @search_order = Array.new
       @array = Array.new
       self.assign_coeficients_to_system_of_equations
       self.reduced_row_echelon_form(@array)
     end
-
-    # get left.each_key {|key| compare_method(key)}
-    
-    # compare_method
-    # unless left[key] == right[key]
-    #   balanced = false
-    #   break from loop to balance
     
  
     # returns an 2-D array where each element is a Rational
