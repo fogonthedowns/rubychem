@@ -153,6 +153,7 @@ module RubyChem
     
     # from the reduced row echelon form we are left with a set
     # of equivalent fractions to transform into a whole number
+    # we do this by using the gcdlcm method
 
     def solve_equivalent_fractions
       last = 0
@@ -173,6 +174,18 @@ module RubyChem
       answer = []
       @reduced_row_echelon_form.each do |row|
         answer << row.last * int
+      end
+      answer << int
+      count = 0
+      @left_system_of_equations.each do |x,v|
+        answer[count]
+        @left_system_of_equations[x] = answer[count].to_i.abs unless answer[count].nil?
+        count += 1
+      end
+      @right_system_of_equations.each do |x,v|
+        answer[count]
+        @right_system_of_equations[x] = answer[count].to_i.abs unless answer[count].nil?
+        count += 1
       end
       answer
     end
