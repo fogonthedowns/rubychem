@@ -145,10 +145,37 @@ module RubyChem
     def balance
       @search_order = Array.new
       @array = Array.new
+      @reduced_row_echelon_form = Array.new
       self.assign_coeficients_to_system_of_equations
-      self.reduced_row_echelon_form(@array)
+      @reduced_row_echelon_form = self.reduced_row_echelon_form(@array)
+      self.apply_solved_equivalent_fractions_to_fraction
     end
     
+    # from the reduced row echelon form we are left with a set
+    # of equivalent fractions to transform into a whole number
+
+    def solve_equivalent_fractions
+      last = 0
+      array = Array.new
+      @reduced_row_echelon_form.each do |x|
+         array = last.gcdlcm(x.last.denominator)
+         last = x.last.denominator
+      end
+      array.max
+    end
+
+    # Now that we have the whole number from solve_equivalent_fractions
+    # we must apply that to each of the fractions to solve for the 
+    # balanced equation
+
+    def apply_solved_equivalent_fractions_to_fraction
+      int = self.solve_equivalent_fractions
+      answer = []
+      @reduced_row_echelon_form.each do |row|
+        answer << row.last * int
+      end
+      answer
+    end
  
     # returns an 2-D array where each element is a Rational
     def reduced_row_echelon_form(ary)
