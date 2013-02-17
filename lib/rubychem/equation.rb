@@ -93,22 +93,24 @@ module RubyChem
 
     def assign_coeficients_to_system_of_equations
       self.combine_atoms
-      self.set_up_system_of_equations
       atom_list = self.left_total.merge(self.right_total)
       # Get the Chemical list
-      assign_coeficients_to_part_system_of_equations(@right_system_of_equations)
-      assign_coeficients_to_part_system_of_equations(@left_system_of_equations)
-      subtract_right_side
-      write_matrix
+      atom_list.keys.each do |atom|
+        self.set_up_system_of_equations
+        assign_coeficients_to_part_system_of_equations(@right_system_of_equations,atom)
+        assign_coeficients_to_part_system_of_equations(@left_system_of_equations,atom)
+        subtract_right_side
+        write_matrix
+      end
     end 
     
-    def assign_coeficients_to_part_system_of_equations(part)
+    def assign_coeficients_to_part_system_of_equations(part,atom_to_search)
         chemicals =  part.keys
         chemicals.each do |chemical|
           # look at the Chemical
           chemical.chem_species.each do |atom|
           # Does the chemical have the atom we are looking for?
-          if "O" == atom[0] 
+          if atom_to_search == atom[0] 
             part[chemical] = atom[1]
           end
         end
@@ -127,18 +129,22 @@ module RubyChem
     # [[0,2,-2,-1]]
 
     def write_matrix
-      @array = Array.new
+      array = Array.new
       @left_system_of_equations.keys.each do |key|
-          array << @left_system_of_equations[key]
+        array << @left_system_of_equations[key]
       end
       @right_system_of_equations.keys.each do |key|
         array  <<  @right_system_of_equations[key]
       end
-      puts array
+       @array << array
+       puts @array
     end
 
 
     def balance
+      @array = Array.new
+      self.assign_coeficients_to_system_of_equations
+      self.reduced_row_echelon_form(@array)
     end
 
     # get left.each_key {|key| compare_method(key)}
@@ -148,8 +154,6 @@ module RubyChem
     #   balanced = false
     #   break from loop to balance
     
-
-    private
  
     # returns an 2-D array where each element is a Rational
     def reduced_row_echelon_form(ary)
