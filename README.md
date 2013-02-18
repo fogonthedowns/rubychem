@@ -7,7 +7,7 @@ Rubychem (<a href="http://github.com/fogonthedowns/rubychem" target="_blank">htt
 * Accurate: Rubychem should have complete test coverage, so you can rely on it.
 
 
-1.0.4 beta
+1.0.5 beta
 ---
 Version 1.0.4 is currently in beta, filled with features you'll love.  To download the beta:
 
