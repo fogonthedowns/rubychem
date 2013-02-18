@@ -21,7 +21,7 @@ Using rubychem is quite straightforward:
     valence = RubyChem::Valence.new(10).calc_valence
     {"1s"=>2, "2s"=>2, "2p"=>6}
     chemical_species = RubyChem::Chemical.new("H2O").chem_species
-    moles = RubyChem::Chemical.new("H2O",1).moles
+    moles = RubyChem::Chemical.new("H2O",2).moles
 
     
 You can use rubychem to parse chemical equations
@@ -29,3 +29,10 @@ You can use rubychem to parse chemical equations
     equation = RubyChem::Equation.new("NaCl = Na + Cl")
     equation.left 
     [#<RubyChem::Chemical:0x007f842313dae0 @chem_species=[["Na", "1"]], @mm=22.99, @moles=0.04349717268377556>, #<RubyChem::Chemical:0x007f842313d2e8 @chem_species=[["Cl", "1"]], @mm=35.45, @moles=0.028208744710860365>] 
+
+
+You can enter an unbalanced chemical equation and have rubychem take care of the dirty work
+
+     chemical = RubyChem::Equation.new("C12H26+O2=CO2+H2O")
+     chemical.balance
+     "2C12H26 + 37O2 = 24C1O2 + 26H2O1" 
