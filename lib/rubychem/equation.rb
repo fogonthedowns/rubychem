@@ -190,6 +190,17 @@ module RubyChem
       end
       answer
       @balanced = {left:@left_system_of_equations,right:@right_system_of_equations}
+      self.balanced_string
+    end
+
+    def balanced_string
+      array_of_strings = Array.new
+      @balanced[:left].each{|x,y|array_of_strings << (x.chem_species.unshift(y).join);x.chem_species.shift}
+      left = array_of_strings.join(" + ")
+      array_of_strings = []
+      @balanced[:right].each{|x,y|array_of_strings << (x.chem_species.unshift(y).join);x.chem_species.shift}
+      right = array_of_strings.join(" + ")
+      left + " = " + right
     end
  
     # returns an 2-D array where each element is a Rational
