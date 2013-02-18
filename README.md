@@ -9,7 +9,7 @@ Rubychem (<a href="http://github.com/fogonthedowns/rubychem" target="_blank">htt
 
 1.0.5 beta
 ---
-Version 1.0.4 is currently in beta, filled with features you'll love.  To download the beta:
+Version 1.0.5 is currently in beta, filled with features you'll love.  To download the beta:
 
     gem install rubychem
 
