@@ -190,7 +190,7 @@ module RubyChem
       end
       answer
       @balanced = {left:@left_system_of_equations,right:@right_system_of_equations}
-      self.balanced_string
+      self.balanced_string.gsub(/([\D^])1([\D$])/, '\1\2')  # or (/1(?!\d)/,"")
     end
 
     def balanced_string
