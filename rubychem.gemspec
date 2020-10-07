@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.summary     = %q{A ruby chemistry library}
   s.description = %q{This is an open source library of chemistry, goodies. I'm dedicating this code to my major professor Arthur Brecher and Graduate PI Dr. Rogers of Bowling Green State University}
 
-  s.rubyforge_project = "rubychem"
+  # s.rubyforge_project = "rubychem"
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
